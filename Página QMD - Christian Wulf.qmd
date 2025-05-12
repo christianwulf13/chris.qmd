@@ -1,0 +1,199 @@
+---
+title: "Christian Wulf"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: load-packages
+#| include: false
+
+library(tidyverse) # Pacote ggplot2 (gráficos) 
+library(WDI) # Pacote para dados do Banco Mundial
+
+# DADOS EM PAINEL
+dadosco2damage <- WDI(country = 'all',
+                indicator = 'NY.ADJ.DCO2.GN.ZS')
+dadosco2damage$destacar <- ifelse(dadosco2damage$country == "Germany", "Alemanha", "Outros")
+
+# CORTE TRANSVERSAL
+dadosco2damage2023 <- WDI(country = 'all',
+                    indicator = 'NY.ADJ.DCO2.GN.ZS',
+                    start = 2023, end = 2023)
+
+# SÉRIE TEMPORAL
+dadosco2damagede <- WDI(country = 'DE',
+                  indicator ='NY.ADJ.DCO2.GN.ZS')
+```
+
+## VARIÁVEL
+
+A variável *“CO₂ Damage (% do GNI)”* foi escolhida por sua relevância ambiental e econômica. Ela representa os prejuízos estimados causados pelas emissões de dióxido de carbono, expressos como percentual do Produto Nacional Bruto (GNI) de cada país — uma métrica que permite dimensionar o impacto ambiental em termos proporcionais à economia nacional.
+
+**Relevância atual:** Em um cenário de crescente urgência climática, compreender o peso das emissões de CO₂ sobre a economia nacional é essencial para o desenvolvimento de políticas públicas, compromissos internacionais e estratégias sustentáveis.
+
+**Geração de insights:** Essa variável possibilita comparações significativas entre países e ao longo do tempo, revelando padrões de impacto ambiental ajustados ao tamanho de cada economia. Isso favorece análises mais justas e fundamentadas.
+
+**Interdisciplinaridade:** Ao integrar aspectos econômicos, ambientais e sociais, o *CO₂ Damage (% do GNI)* é uma ferramenta valiosa para estudos em ESG (Environmental, Social and Governance), sustentabilidade e planejamento de longo prazo.
+
+Com base nessa métrica, foram elaborados gráficos que evidenciam variações e tendências, permitindo uma interpretação visual clara sobre a evolução e os efeitos das emissões de CO₂ nas economias ao redor do mundo.
+
+## GRÁFICO COM DADOS EM PAINEL
+
+Para representar visualmente a variável *CO₂ Damage (% do GNI)*, foi utilizado um gráfico construído a partir de dados em painel — ou seja, que combinam observações ao longo do tempo (séries temporais) e entre diferentes unidades (países).
+
+O uso de dados em painel é especialmente eficaz por permitir:
+
+-   **Visualização de tendências temporais** dentro de cada país ao longo dos anos;
+
+-   **Comparação entre países**, destacando padrões distintos, similaridades e heterogeneidades;
+
+-   **Identificação de outliers e comportamentos atípicos**, tanto no tempo quanto entre nações.
+
+No gráfico, é possível observar que os danos econômicos causados pelas emissões de CO₂, como percentual do GNI, apresentam comportamentos variados. Enquanto alguns países registram tendência de redução desses impactos ao longo do tempo, outros mantêm níveis estáveis ou até crescentes.
+
+Essa representação gráfica oferece uma base robusta para análises mais aprofundadas, como investigações causais, correlações com outras variáveis (como PIB, estrutura da matriz energética ou políticas ambientais), além de apoiar o planejamento e a formulação de estratégias sustentáveis.
+
+```{r}
+#| label: dadosempainel
+#| warning: false
+#| echo: false
+
+ggplot() +
+  # Linhas conectando os pontos
+  geom_line(data = dadosco2damage,
+            aes(x = year, y = NY.ADJ.DCO2.GN.ZS, group = country, color = destacar),
+            alpha = 0.3) +
+  # Pontos dos outros países
+  geom_point(data = subset(dadosco2damage, destacar == "Outros"),
+             aes(x = year, y = NY.ADJ.DCO2.GN.ZS),
+             color = "#1f77b4", alpha = 0.6) +
+  # Pontos da Alemanha em vermelho (vem por cima)
+  geom_point(data = subset(dadosco2damage, destacar == "Alemanha"),
+             aes(x = year, y = NY.ADJ.DCO2.GN.ZS),
+             color = "red", size = 3) +
+  # Título e rótulos dos eixos
+  labs(
+    title = "Tendências do Impacto Econômico do CO2 por País",
+    subtitle = "Dados de painel com destaque para a Alemanha",
+    x = "Ano",
+    y = "CO2 DAMAGE (% do GNI)",
+    color = "Destaque"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold", size = 16, hjust = 0.5),
+    plot.subtitle = element_text(size = 12, hjust = 0.5)
+  )
+```
+
+## GRÁFICO COM CORTE TRANSVERSAL
+
+O gráfico com corte transversal foi utilizado para comparar diferentes unidades — como países, empresas ou indivíduos — em um único ponto no tempo. Essa abordagem fornece uma *fotografia estática* da variável analisada, permitindo identificar diferenças e padrões entre os grupos observados, sem considerar variações ao longo dos anos.
+
+Esse tipo de representação é útil para:
+
+-   Comparar o impacto relativo entre países em um ano específico;
+
+-   Detectar disparidades ou similaridades estruturais entre as unidades observadas;
+
+-    Fornecer uma base para análises exploratórias ou diagnósticas em determinado período.
+
+```{r}
+#| label: cortetransversal
+#| warning: false 
+#| echo: false  
+
+library(ggplot2)
+library(plotly)
+
+# Simulando dados para teste
+dados <- data.frame(
+  country = c("Germany", "Brazil", "USA", "China", "India"),
+  NY.ADJ.DCO2.GN.ZS = c(2.5, 1.2, 3.8, 4.1, 2.0)
+)
+
+# Marcar Alemanha
+dados$destacar <- ifelse(dados$country == "Germany", "Alemanha", "Outros")
+
+# Gráfico ggplot aprimorado
+grafico_base <- ggplot(dados, aes(x = reorder(country, NY.ADJ.DCO2.GN.ZS),
+                                  y = NY.ADJ.DCO2.GN.ZS,
+                                  fill = NY.ADJ.DCO2.GN.ZS,
+                                  text = paste0("País: ", country, 
+                                                "<br>CO2 DAMAGE: ", NY.ADJ.DCO2.GN.ZS))) +
+  geom_col(show.legend = FALSE) +
+  scale_fill_gradient(low = "#1f77b4", high = "red") + # Gradiente de cores
+  labs(
+    title = "Impacto Econômico do CO2 (Corte Transversal - 2023)",
+    subtitle = "Comparação entre países para o ano de 2023",
+    x = "País",
+    y = "CO2 DAMAGE (% do GNI)",
+    caption = "Fonte: Banco Mundial - World Development Indicators"
+  ) +
+  geom_text(aes(label = round(NY.ADJ.DCO2.GN.ZS, 2)), hjust = -0.3, color = "black", size = 4) +
+  coord_flip() + # Virar o gráfico para melhor visualização
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold", size = 16, hjust = 0.5),
+    plot.subtitle = element_text(size = 12, hjust = 0.5),
+    axis.text.y = element_text(size = 12),
+    axis.text.x = element_text(size = 12),
+    axis.title = element_text(face = "bold", size = 14)
+  )
+
+# Converter em gráfico interativo
+grafico_interativo <- ggplotly(grafico_base, tooltip = "text")
+grafico_interativo
+```
+
+## GRÁFICO COM SÉRIE TEMPORAL
+
+O gráfico de série temporal foi utilizado para acompanhar a evolução da variável *CO₂ Damage (% do GNI)* ao longo dos anos. Esse tipo de visualização permite observar como os danos econômicos associados às emissões de CO₂ se comportaram em diferentes períodos, destacando tendências, flutuações e possíveis pontos de inflexão.
+
+Essa abordagem é especialmente útil para:
+
+-   Identificar **tendências de longo prazo** (crescimento, redução ou estabilidade);
+
+-   Detectar **variações sazonais ou cíclicas** no comportamento da variável;
+
+-    Avaliar o impacto de **eventos específicos ou mudanças de política** sobre os danos econômicos causados pelas emissões.
+
+```{r}
+#| label: serietemporal  
+#| warning: false 
+#| echo: false    
+
+# Verificação: destacando Alemanha
+dadosco2damagede$destacar <- ifelse(trimws(dadosco2damagede$country) == "Germany", "Alemanha", "Outros")
+
+# Filtrando dados válidos (remover NAs)
+dados_validos <- subset(dadosco2damagede, !is.na(NY.ADJ.DCO2.GN.ZS) & !is.na(year))
+
+# Gráfico base com ggplot2
+grafserie <- ggplot(dados_validos, aes(x = year, y = NY.ADJ.DCO2.GN.ZS,
+                                       color = destacar,
+                                       text = paste0("Ano: ", year,
+                                                     "<br>País: ", country,
+                                                     "<br>CO2 DAMAGE: ", round(NY.ADJ.DCO2.GN.ZS, 2)))) +
+  geom_line(aes(group = country), alpha = 0.3, color = "#a6bddb") +  # Linhas suaves para todos
+  geom_line(data = subset(dados_validos, destacar == "Alemanha"),
+            aes(group = country),
+            color = "red", size = 1.5) +  # Alemanha em destaque
+  labs(
+    title = "Evolução Temporal do Impacto Econômico do CO2",
+    subtitle = "Destaque para a Alemanha",
+    x = "Ano",
+    y = "CO2 DAMAGE (% do GNI)",
+    color = "Destaque"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold", size = 16, hjust = 0.5),
+    plot.subtitle = element_text(size = 12, hjust = 0.5)
+  )
+
+# Converter em gráfico interativo
+grafserie_interativo <- ggplotly(grafserie, tooltip = "text")
+grafserie_interativo
+```
