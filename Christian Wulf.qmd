@@ -77,50 +77,36 @@ No gráfico, é possível observar que os danos econômicos causados pelas emiss
 Essa representação gráfica oferece uma base robusta para análises mais aprofundadas, como investigações causais, correlações com outras variáveis (como PIB, estrutura da matriz energética ou políticas ambientais), além de apoiar o planejamento e a formulação de estratégias sustentáveis.
 
 ```{r}
-#| label: grafico-evolucao
+#| label: dadosempainel
 #| warning: false
 #| echo: false
 
-top_paises <- dadosco2damage2023 %>%
-  arrange(desc(NY.ADJ.DCO2.GN.ZS)) %>%
-  slice_head(n = 8) %>%
-  pull(country)
-top_paises <- unique(c(top_paises, "Germany"))
-
-painel_destaque <- dadosco2damage %>%
-  filter(country %in% top_paises & !is.na(NY.ADJ.DCO2.GN.ZS) & !is.na(year)) %>%
-  mutate(Destaque = ifelse(country == "Germany", "Alemanha", country))
-
-cores <- brewer.pal(max(3, length(unique(painel_destaque$Destaque))), "Set1")
-
-fig_evolucao <- plot_ly()
-for (i in seq_along(unique(painel_destaque$Destaque))) {
-  pais <- unique(painel_destaque$Destaque)[i]
-  cor <- cores[i]
-  dados_pais <- painel_destaque %>% filter(Destaque == pais)
-  fig_evolucao <- fig_evolucao %>%
-    add_trace(
-      data = dados_pais, x = ~year, y = ~NY.ADJ.DCO2.GN.ZS, 
-      type = 'scatter', mode = 'lines+markers', 
-      name = pais,
-      line = list(width = ifelse(pais == "Alemanha", 5, 2), color = cor),
-      marker = list(size = ifelse(pais == "Alemanha", 10, 6), color = cor),
-      text = ~paste(
-        "<b>País:</b>", country,
-        "<br><b>Ano:</b>", year,
-        "<br><b>Dano CO₂ (% do GNI):</b>", round(NY.ADJ.DCO2.GN.ZS, 2)
-      ),
-      hoverinfo = "text"
-    )
-}
-fig_evolucao <- fig_evolucao %>%
-  layout(
-    title = "Evolução do Dano Econômico do CO₂ (% do GNI)",
-    xaxis = list(title = "Ano"),
-    yaxis = list(title = "Dano CO₂ (% do GNI)"),
-    legend = list(orientation = "h", x = 0.05, y = -0.25)
+ggplot() +
+  # Linhas conectando os pontos
+  geom_line(data = dadosco2damage,
+            aes(x = year, y = NY.ADJ.DCO2.GN.ZS, group = country, color = destacar),
+            alpha = 0.3) +
+  # Pontos dos outros países
+  geom_point(data = subset(dadosco2damage, destacar == "Outros"),
+             aes(x = year, y = NY.ADJ.DCO2.GN.ZS),
+             color = "#1f77b4", alpha = 0.6) +
+  # Pontos da Alemanha em vermelho (vem por cima)
+  geom_point(data = subset(dadosco2damage, destacar == "Alemanha"),
+             aes(x = year, y = NY.ADJ.DCO2.GN.ZS),
+             color = "red", size = 3) +
+  # Título e rótulos dos eixos
+  labs(
+    title = "Tendências do Impacto Econômico do CO2 por País",
+    subtitle = "Dados de painel com destaque para a Alemanha",
+    x = "Ano",
+    y = "CO2 DAMAGE (% do GNI)",
+    color = "Destaque"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold", size = 16, hjust = 0.5),
+    plot.subtitle = element_text(size = 12, hjust = 0.5)
   )
-fig_evolucao
 ```
 
 ------------------------------------------------------------------------
