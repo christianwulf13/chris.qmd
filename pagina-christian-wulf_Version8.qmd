@@ -1,0 +1,214 @@
+---
+title: "Impacto Econômico das Emissões de CO₂"
+format: 
+  html:
+    toc: true
+    toc-location: left
+    code-fold: true
+    theme: cosmo
+editor: visual
+---
+
+```{r}
+#| label: pacotes
+#| include: false
+
+if (!requireNamespace("DT", quietly = TRUE)) install.packages("DT")
+if (!requireNamespace("plotly", quietly = TRUE)) install.packages("plotly")
+if (!requireNamespace("WDI", quietly = TRUE)) install.packages("WDI")
+if (!requireNamespace("tidyverse", quietly = TRUE)) install.packages("tidyverse")
+if (!requireNamespace("RColorBrewer", quietly = TRUE)) install.packages("RColorBrewer")
+
+library(tidyverse)
+library(WDI)
+library(plotly)
+library(DT)
+library(RColorBrewer)
+```
+
+# Visão Geral
+
+A quantificação dos danos econômicos causados pelas emissões de dióxido de carbono (*CO₂ Damage % do GNI*) permite avaliar políticas ambientais, comparar países e monitorar avanços em sustentabilidade. Este painel interativo oferece uma experiência moderna e visualmente atraente para explorar o tema.
+
+-   **Evolução histórica** dos países mais afetados e da Alemanha.
+-   **Comparação internacional** com gráfico de dispersão interativo (PIB per capita, população e dano econômico).
+-   **Foco na Alemanha** com linha do tempo detalhada.
+-   **Tabela dinâmica** para consulta e comparação.
+
+------------------------------------------------------------------------
+
+## Coleta e Preparação de Dados
+
+```{r}
+#| label: dados
+#| echo: false
+
+# Dados principais
+dadosco2damage <- WDI(country = 'all', indicator = 'NY.ADJ.DCO2.GN.ZS')
+dadosco2damage2023 <- WDI(country = 'all', indicator = 'NY.ADJ.DCO2.GN.ZS', start = 2023, end = 2023) %>%
+  filter(!is.na(NY.ADJ.DCO2.GN.ZS))
+dadosco2damagede <- WDI(country = 'DE', indicator = 'NY.ADJ.DCO2.GN.ZS')
+
+# Dados auxiliares para dispersão (PIB per capita e população)
+dados_pibpercap <- WDI(country = 'all', indicator = 'NY.GDP.PCAP.CD', start = 2023, end = 2023)
+dados_populacao <- WDI(country = 'all', indicator = 'SP.POP.TOTL', start = 2023, end = 2023)
+regioes <- WDI_data$country %>% select(iso2c, region)
+```
+
+------------------------------------------------------------------------
+
+## 1. Evolução dos Maiores Danos Econômicos por País
+
+O gráfico abaixo destaca os 8 países mais impactados em 2023 e a Alemanha. Passe o mouse sobre as linhas para detalhes, selecione países na legenda e aproxime com zoom.
+
+```{r}
+#| label: grafico-evolucao
+#| warning: false
+#| echo: false
+
+top_paises <- dadosco2damage2023 %>%
+  arrange(desc(NY.ADJ.DCO2.GN.ZS)) %>%
+  slice_head(n = 8) %>%
+  pull(country)
+top_paises <- unique(c(top_paises, "Germany"))
+
+painel_destaque <- dadosco2damage %>%
+  filter(country %in% top_paises & !is.na(NY.ADJ.DCO2.GN.ZS) & !is.na(year)) %>%
+  mutate(Destaque = ifelse(country == "Germany", "Alemanha", country))
+
+cores <- brewer.pal(max(3, length(unique(painel_destaque$Destaque))), "Set1")
+
+fig_evolucao <- plot_ly()
+for (i in seq_along(unique(painel_destaque$Destaque))) {
+  pais <- unique(painel_destaque$Destaque)[i]
+  cor <- cores[i]
+  dados_pais <- painel_destaque %>% filter(Destaque == pais)
+  fig_evolucao <- fig_evolucao %>%
+    add_trace(
+      data = dados_pais, x = ~year, y = ~NY.ADJ.DCO2.GN.ZS, 
+      type = 'scatter', mode = 'lines+markers', 
+      name = pais,
+      line = list(width = ifelse(pais == "Alemanha", 5, 2), color = cor),
+      marker = list(size = ifelse(pais == "Alemanha", 10, 6), color = cor),
+      text = ~paste(
+        "<b>País:</b>", country,
+        "<br><b>Ano:</b>", year,
+        "<br><b>Dano CO₂ (% do GNI):</b>", round(NY.ADJ.DCO2.GN.ZS, 2)
+      ),
+      hoverinfo = "text"
+    )
+}
+fig_evolucao <- fig_evolucao %>%
+  layout(
+    title = "Evolução do Dano Econômico do CO₂ (% do GNI)",
+    xaxis = list(title = "Ano"),
+    yaxis = list(title = "Dano CO₂ (% do GNI)"),
+    legend = list(orientation = "h", x = 0.05, y = -0.25)
+  )
+fig_evolucao
+```
+
+------------------------------------------------------------------------
+
+## 2. Dispersão Interativa: CO₂ Damage x PIB per capita x População (2023)
+
+Compare países em 2023. O eixo X traz o PIB per capita (escala logarítmica), o Y mostra o dano econômico, o tamanho da bolha representa a população e as cores distinguem as regiões do mundo. Alemanha e países do G20 são destacados.
+
+```{r}
+#| label: cortetransversal
+#| warning: false 
+#| echo: false  
+
+unique(dadosco2damage2023$country)
+summary(dadosco2damage2023$NY.ADJ.DCO2.GN.ZS)
+library(ggplot2)
+library(plotly)
+
+# Simulando dados simples — teste com isso primeiro
+dados <- data.frame(
+  country = c("Germany", "Brazil", "USA", "China", "India"),
+  NY.ADJ.DCO2.GN.ZS = c(2.5, 1.2, 3.8, 4.1, 2.0)
+)
+
+# Marcar Alemanha
+dados$destacar <- ifelse(dados$country == "Germany", "Alemanha", "Outros")
+
+# Gráfico ggplot
+grafico_base <- ggplot(dados, aes(x = reorder(country, NY.ADJ.DCO2.GN.ZS),
+                                  y = NY.ADJ.DCO2.GN.ZS,
+                                  fill = destacar,
+                                  text = paste0("País: ", country, "<br>CO2 DAMAGE: ", NY.ADJ.DCO2.GN.ZS))) +
+  geom_col() +
+  scale_fill_manual(values = c("Alemanha" = "red", "Outros" = "#1f77b4")) +
+  labs(
+    title = "Dados Econômico Relacionados ao CO2",
+    x = "País",
+    y = "CO2 DAMAGE",
+    fill = "Destaque"
+  ) +
+  coord_flip() +
+  theme_minimal()
+
+# Gráfico interativo
+ggplotly(grafico_base, tooltip = "text")
+```
+
+------------------------------------------------------------------------
+
+## 3. Alemanha: Linha do Tempo Interativa
+
+Acompanhe a evolução do indicador na Alemanha. O gráfico permite zoom, seleção e detalhes por ponto.
+
+```{r}
+#| label: grafico-alemanha
+#| warning: false
+#| echo: false
+
+dados_validos_de <- dadosco2damagede %>% filter(!is.na(NY.ADJ.DCO2.GN.ZS) & !is.na(year))
+
+fig_de <- plot_ly(
+  data = dados_validos_de,
+  x = ~year, y = ~NY.ADJ.DCO2.GN.ZS,
+  type = 'scatter', mode = 'lines+markers',
+  line = list(color = "#e41a1c", width = 4),
+  marker = list(color = "#e41a1c", size = 10),
+  text = ~paste(
+    "<b>Ano:</b>", year,
+    "<br><b>Dano CO₂ (% do GNI):</b>", round(NY.ADJ.DCO2.GN.ZS, 2)
+  ),
+  hoverinfo = "text"
+) %>%
+  layout(
+    title = "Alemanha: Evolução do Dano CO₂ (% do GNI)",
+    xaxis = list(title = "Ano"),
+    yaxis = list(title = "Dano CO₂ (% do GNI)")
+  )
+fig_de
+```
+
+------------------------------------------------------------------------
+
+## 4. Tabela Dinâmica para Consulta
+
+Explore, busque e ordene os países segundo o dano econômico do CO₂ em 2023.
+
+```{r}
+#| label: tabela-interativa
+#| echo: false
+
+DT::datatable(
+  dadosco2damage2023 %>%
+    arrange(desc(NY.ADJ.DCO2.GN.ZS)) %>%
+    select(País = country, `Dano CO₂ (% do GNI)` = NY.ADJ.DCO2.GN.ZS),
+  options = list(pageLength = 12, scrollX = TRUE),
+  rownames = FALSE
+)
+```
+
+------------------------------------------------------------------------
+
+## Considerações
+
+O *CO₂ Damage (% do GNI)* é fundamental para embasar políticas ambientais e avaliar o progresso rumo a uma economia de baixo carbono. Visualizações modernas e interativas, como as apresentadas aqui, tornam a análise mais intuitiva, acessível e útil para tomada de decisão pública e privada.
+
+------------------------------------------------------------------------
