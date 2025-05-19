@@ -81,27 +81,35 @@ Essa representação gráfica oferece uma base robusta para análises mais aprof
 #| warning: false
 #| echo: false
 
+# Garante a coluna de destaque
+dadosco2damage <- dadosco2damage %>%
+  mutate(destacar = if_else(country == "Germany", "Alemanha", "Outros"))
+
+# Gráfico
 ggplot() +
-  # Linhas conectando os pontos
-  geom_line(data = dadosco2damage,
-            aes(x = year, y = NY.ADJ.DCO2.GN.ZS, group = country, color = destacar),
-            alpha = 0.3) +
-  # Pontos dos outros países
-  geom_point(data = subset(dadosco2damage, destacar == "Outros"),
-             aes(x = year, y = NY.ADJ.DCO2.GN.ZS),
-             color = "#1f77b4", alpha = 0.6) +
-  # Pontos da Alemanha em vermelho (vem por cima)
-  geom_point(data = subset(dadosco2damage, destacar == "Alemanha"),
-             aes(x = year, y = NY.ADJ.DCO2.GN.ZS),
-             color = "red", size = 3) +
-  # Título e rótulos dos eixos
+  geom_line(
+    data = dadosco2damage,
+    aes(x = year, y = NY.ADJ.DCO2.GN.ZS, group = country, color = destacar),
+    alpha = 0.3
+  ) +
+  geom_point(
+    data = subset(dadosco2damage, destacar == "Outros"),
+    aes(x = year, y = NY.ADJ.DCO2.GN.ZS),
+    color = "#1f77b4", alpha = 0.6
+  ) +
+  geom_point(
+    data = subset(dadosco2damage, destacar == "Alemanha"),
+    aes(x = year, y = NY.ADJ.DCO2.GN.ZS),
+    color = "black", size = 3
+  ) +
   labs(
-    title = "Tendências do Impacto Econômico do CO2 por País",
+    title = "Tendências do Impacto Econômico do CO₂ por País",
     subtitle = "Dados de painel com destaque para a Alemanha",
     x = "Ano",
-    y = "CO2 DAMAGE (% do GNI)",
+    y = "CO₂ DAMAGE (% do GNI)",
     color = "Destaque"
   ) +
+  scale_color_manual(values = c("Alemanha" = "red", "Outros" = "#1f77b4")) +
   theme_minimal(base_size = 14) +
   theme(
     plot.title = element_text(face = "bold", size = 16, hjust = 0.5),
