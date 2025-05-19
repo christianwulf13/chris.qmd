@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Impacto Econômico das Emissões de CO₂</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="Christian Wulf_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Christian Wulf_files/libs/quarto-html/quarto.js"></script>
+<script src="Christian Wulf_files/libs/quarto-html/popper.min.js"></script>
+<script src="Christian Wulf_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Christian Wulf_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Christian Wulf_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Christian Wulf_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Christian Wulf_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Christian Wulf_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Christian Wulf_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="Christian Wulf_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="Christian Wulf_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<script src="Christian Wulf_files/libs/plotly-binding-4.10.4/plotly.js"></script>
+
+<script src="Christian Wulf_files/libs/typedarray-0.1/typedarray.min.js"></script>
+
+<script src="Christian Wulf_files/libs/jquery-3.5.1/jquery.min.js"></script>
+
+<link href="Christian Wulf_files/libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+
+<script src="Christian Wulf_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+
+<link href="Christian Wulf_files/libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+
+<script src="Christian Wulf_files/libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#visão-geral" id="toc-visão-geral" class="nav-link active" data-scroll-target="#visão-geral">Visão Geral</a>
+  <ul class="collapse">
+  <li><a href="#coleta-e-preparação-de-dados" id="toc-coleta-e-preparação-de-dados" class="nav-link" data-scroll-target="#coleta-e-preparação-de-dados">Coleta e Preparação de Dados</a></li>
+  <li><a href="#gráfico-com-dados-em-painel" id="toc-gráfico-com-dados-em-painel" class="nav-link" data-scroll-target="#gráfico-com-dados-em-painel"><strong>GRÁFICO COM DADOS EM PAINEL</strong></a></li>
+  <li><a href="#gráfico-com-corte-transversal" id="toc-gráfico-com-corte-transversal" class="nav-link" data-scroll-target="#gráfico-com-corte-transversal"><strong>GRÁFICO COM CORTE TRANSVERSAL</strong></a></li>
+  <li><a href="#gráfico-com-série-temporal" id="toc-gráfico-com-série-temporal" class="nav-link" data-scroll-target="#gráfico-com-série-temporal"><strong>GRÁFICO COM SÉRIE TEMPORAL</strong></a></li>
+  <li><a href="#considerações" id="toc-considerações" class="nav-link" data-scroll-target="#considerações">Considerações</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Impacto Econômico das Emissões de CO₂</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="visão-geral" class="level1">
+<h1>Visão Geral</h1>
+<p>A variável <em>“CO₂ Damage (% do GNI)”</em> foi escolhida por sua relevância ambiental e econômica. Ela representa os prejuízos estimados causados pelas emissões de dióxido de carbono, expressos como percentual do Produto Nacional Bruto (GNI) de cada país — uma métrica que permite dimensionar o impacto ambiental em termos proporcionais à economia nacional.</p>
+<p><strong>Relevância atual:</strong> Em um cenário de crescente urgência climática, compreender o peso das emissões de CO₂ sobre a economia nacional é essencial para o desenvolvimento de políticas públicas, compromissos internacionais e estratégias sustentáveis.</p>
+<p><strong>Geração de insights:</strong> Essa variável possibilita comparações significativas entre países e ao longo do tempo, revelando padrões de impacto ambiental ajustados ao tamanho de cada economia. Isso favorece análises mais justas e fundamentadas.</p>
+<p><strong>Interdisciplinaridade:</strong> Ao integrar aspectos econômicos, ambientais e sociais, o <em>CO₂ Damage (% do GNI)</em> é uma ferramenta valiosa para estudos em ESG (Environmental, Social and Governance), sustentabilidade e planejamento de longo prazo.</p>
+<p>Com base nessa métrica, foram elaborados gráficos que evidenciam variações e tendências, permitindo uma interpretação visual clara sobre a evolução e os efeitos das emissões de CO₂ nas economias ao redor do mundo.</p>
+<hr>
+<section id="coleta-e-preparação-de-dados" class="level2">
+<h2 class="anchored" data-anchor-id="coleta-e-preparação-de-dados">Coleta e Preparação de Dados</h2>
+<hr>
+</section>
+<section id="gráfico-com-dados-em-painel" class="level2">
+<h2 class="anchored" data-anchor-id="gráfico-com-dados-em-painel"><strong>GRÁFICO COM DADOS EM PAINEL</strong></h2>
+<p>Para representar visualmente a variável <em>CO₂ Damage (% do GNI)</em>, foi utilizado um gráfico construído a partir de dados em painel — ou seja, que combinam observações ao longo do tempo (séries temporais) e entre diferentes unidades (países).</p>
+<p>O uso de dados em painel é especialmente eficaz por permitir:</p>
+<ul>
+<li><p><strong>Visualização de tendências temporais</strong> dentro de cada país ao longo dos anos;</p></li>
+<li><p><strong>Comparação entre países</strong>, destacando padrões distintos, similaridades e heterogeneidades;</p></li>
+<li><p><strong>Identificação de outliers e comportamentos atípicos</strong>, tanto no tempo quanto entre nações.</p></li>
+</ul>
+<p>No gráfico, é possível observar que os danos econômicos causados pelas emissões de CO₂, como percentual do GNI, apresentam comportamentos variados. Enquanto alguns países registram tendência de redução desses impactos ao longo do tempo, outros mantêm níveis estáveis ou até crescentes.</p>
+<p>Essa representação gráfica oferece uma base robusta para análises mais aprofundadas, como investigações causais, correlações com outras variáveis (como PIB, estrutura da matriz energética ou políticas ambientais), além de apoiar o planejamento e a formulação de estratégias sustentáveis.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-a993799af3df483176c4" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-a993799af3df483176c4">{"x":{"visdat":{"5ddc57b63f03":["function () ","plotlyVisDat"],"5ddc7fef164":["function () ","data"]},"cur_data":"5ddc7fef164","attrs":{"5ddc7fef164":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"scatter","mode":"lines+markers","name":"Alemanha","line":{"width":5,"color":"#E41A1C"},"marker":{"size":10,"color":"#E41A1C"},"text":{},"hoverinfo":"text","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Evolução do Dano Econômico do CO₂ (% do GNI)","xaxis":{"domain":[0,1],"automargin":true,"title":"Ano"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Dano CO₂ (% do GNI)"},"legend":{"orientation":"h","x":0.050000000000000003,"y":-0.25},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[2021,2020,2019,2018,2017,2016,2015,2014,2013,2012,2011,2010,2009,2008,2007,2006,2005,2004,2003,2002,2001,2000,1999,1998,1997,1996,1995,1994,1993,1992,1991,1990],"y":[0.62673737008943298,0.64847319952298299,0.66702022604694899,0.67487504260701903,0.72501519635760103,0.75455122982515599,0.75164390113781498,0.62470222962779898,0.65674389119004295,0.65389716513650198,0.57904840783008604,0.63707776853471298,0.58178266989813399,0.56055292015029501,0.58082122650382295,0.655832562272466,0.650382303142787,0.63979292509271601,0.71008629218911601,0.81670032945515503,0.85143571225041803,0.79561908331920195,0.67883836873479797,0.66537019071066295,0.65440284675327798,0.57633864655857803,0.51780582334818503,0.58182332865575304,0.59946706574355002,0.55942355174565095,0.63679986333758598,0.64639269593587301],"type":"scatter","mode":"lines+markers","name":"Alemanha","line":{"color":"#E41A1C","width":5},"marker":{"color":"#E41A1C","size":10,"line":{"color":"rgba(31,119,180,1)"}},"text":["<b>País:<\/b> Germany <br><b>Ano:<\/b> 2021 <br><b>Dano CO₂ (% do GNI):<\/b> 0.63","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2020 <br><b>Dano CO₂ (% do GNI):<\/b> 0.65","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2019 <br><b>Dano CO₂ (% do GNI):<\/b> 0.67","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2018 <br><b>Dano CO₂ (% do GNI):<\/b> 0.67","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2017 <br><b>Dano CO₂ (% do GNI):<\/b> 0.73","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2016 <br><b>Dano CO₂ (% do GNI):<\/b> 0.75","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2015 <br><b>Dano CO₂ (% do GNI):<\/b> 0.75","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2014 <br><b>Dano CO₂ (% do GNI):<\/b> 0.62","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2013 <br><b>Dano CO₂ (% do GNI):<\/b> 0.66","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2012 <br><b>Dano CO₂ (% do GNI):<\/b> 0.65","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2011 <br><b>Dano CO₂ (% do GNI):<\/b> 0.58","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2010 <br><b>Dano CO₂ (% do GNI):<\/b> 0.64","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2009 <br><b>Dano CO₂ (% do GNI):<\/b> 0.58","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2008 <br><b>Dano CO₂ (% do GNI):<\/b> 0.56","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2007 <br><b>Dano CO₂ (% do GNI):<\/b> 0.58","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2006 <br><b>Dano CO₂ (% do GNI):<\/b> 0.66","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2005 <br><b>Dano CO₂ (% do GNI):<\/b> 0.65","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2004 <br><b>Dano CO₂ (% do GNI):<\/b> 0.64","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2003 <br><b>Dano CO₂ (% do GNI):<\/b> 0.71","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2002 <br><b>Dano CO₂ (% do GNI):<\/b> 0.82","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2001 <br><b>Dano CO₂ (% do GNI):<\/b> 0.85","<b>País:<\/b> Germany <br><b>Ano:<\/b> 2000 <br><b>Dano CO₂ (% do GNI):<\/b> 0.8","<b>País:<\/b> Germany <br><b>Ano:<\/b> 1999 <br><b>Dano CO₂ (% do GNI):<\/b> 0.68","<b>País:<\/b> Germany <br><b>Ano:<\/b> 1998 <br><b>Dano CO₂ (% do GNI):<\/b> 0.67","<b>País:<\/b> Germany <br><b>Ano:<\/b> 1997 <br><b>Dano CO₂ (% do GNI):<\/b> 0.65","<b>País:<\/b> Germany <br><b>Ano:<\/b> 1996 <br><b>Dano CO₂ (% do GNI):<\/b> 0.58","<b>País:<\/b> Germany <br><b>Ano:<\/b> 1995 <br><b>Dano CO₂ (% do GNI):<\/b> 0.52","<b>País:<\/b> Germany <br><b>Ano:<\/b> 1994 <br><b>Dano CO₂ (% do GNI):<\/b> 0.58","<b>País:<\/b> Germany <br><b>Ano:<\/b> 1993 <br><b>Dano CO₂ (% do GNI):<\/b> 0.6","<b>País:<\/b> Germany <br><b>Ano:<\/b> 1992 <br><b>Dano CO₂ (% do GNI):<\/b> 0.56","<b>País:<\/b> Germany <br><b>Ano:<\/b> 1991 <br><b>Dano CO₂ (% do GNI):<\/b> 0.64","<b>País:<\/b> Germany <br><b>Ano:<\/b> 1990 <br><b>Dano CO₂ (% do GNI):<\/b> 0.65"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text"],"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<hr>
+</section>
+<section id="gráfico-com-corte-transversal" class="level2">
+<h2 class="anchored" data-anchor-id="gráfico-com-corte-transversal"><strong>GRÁFICO COM CORTE TRANSVERSAL</strong></h2>
+<p>O gráfico com corte transversal foi utilizado para comparar diferentes unidades — como países, empresas ou indivíduos — em um único ponto no tempo. Essa abordagem fornece uma <em>fotografia estática</em> da variável analisada, permitindo identificar diferenças e padrões entre os grupos observados, sem considerar variações ao longo dos anos.</p>
+<p>Esse tipo de representação é útil para:</p>
+<ul>
+<li><p>Comparar o impacto relativo entre países em um ano específico;</p></li>
+<li><p>Detectar disparidades ou similaridades estruturais entre as unidades observadas;</p></li>
+<li><p>Fornecer uma base para análises exploratórias ou diagnósticas em determinado período.</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>character(0)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+                                                </code></pre>
+</div>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-c10a9ff7ffb74a0d0831" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-c10a9ff7ffb74a0d0831">{"x":{"data":[{"orientation":"h","width":0.90000000000000036,"base":0,"x":[2.5],"y":[3],"text":"País: Germany<br>CO2 DAMAGE: 2.5","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,0,0,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"Alemanha","legendgroup":"Alemanha","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.89999999999999991,0.90000000000000036,0.90000000000000036,0.90000000000000013],"base":[0,0,0,0],"x":[1.2,3.7999999999999998,4.0999999999999996,2],"y":[1,4,5,2],"text":["País: Brazil<br>CO2 DAMAGE: 1.2","País: USA<br>CO2 DAMAGE: 3.8","País: China<br>CO2 DAMAGE: 4.1","País: India<br>CO2 DAMAGE: 2"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(31,119,180,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"Outros","legendgroup":"Outros","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.762557077625573,"r":7.3059360730593621,"b":40.182648401826491,"l":66.484018264840202},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Dados Econômico Relacionados ao CO2","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.20499999999999999,4.3049999999999997],"tickmode":"array","ticktext":["0","1","2","3","4"],"tickvals":[0,1,2,3,4],"categoryorder":"array","categoryarray":["0","1","2","3","4"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"CO2 DAMAGE","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,5.5999999999999996],"tickmode":"array","ticktext":["Brazil","India","Germany","USA","China"],"tickvals":[1,2,3,4,5],"categoryorder":"array","categoryarray":["Brazil","India","Germany","USA","China"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"País","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"Destaque","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"5ddc59314f48":{"x":{},"y":{},"fill":{},"text":{},"type":"bar"}},"cur_data":"5ddc59314f48","visdat":{"5ddc59314f48":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<hr>
+</section>
+<section id="gráfico-com-série-temporal" class="level2">
+<h2 class="anchored" data-anchor-id="gráfico-com-série-temporal"><strong>GRÁFICO COM SÉRIE TEMPORAL</strong></h2>
+<p>O gráfico de série temporal foi utilizado para acompanhar a evolução da variável <em>CO₂ Damage (% do GNI)</em> ao longo dos anos. Esse tipo de visualização permite observar como os danos econômicos associados às emissões de CO₂ se comportaram em diferentes períodos, destacando tendências, flutuações e possíveis pontos de inflexão.</p>
+<p>Essa abordagem é especialmente útil para:</p>
+<ul>
+<li><p>Identificar <strong>tendências de longo prazo</strong> (crescimento, redução ou estabilidade);</p></li>
+<li><p>Detectar <strong>variações sazonais ou cíclicas</strong> no comportamento da variável;</p></li>
+<li><p>Avaliar o impacto de <strong>eventos específicos ou mudanças de política</strong> sobre os danos econômicos causados pelas emissões.</p></li>
+</ul>
+<p>Acompanhe a evolução do indicador na Alemanha. O gráfico permite zoom, seleção e detalhes por ponto.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-85bf93c9724f4f83dc4c" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-85bf93c9724f4f83dc4c">{"x":{"visdat":{"5ddc1e835437":["function () ","plotlyVisDat"]},"cur_data":"5ddc1e835437","attrs":{"5ddc1e835437":{"x":{},"y":{},"mode":"lines+markers","line":{"color":"#e41a1c","width":4},"marker":{"color":"#e41a1c","size":10},"text":{},"hoverinfo":"text","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Alemanha: Evolução do Dano CO₂ (% do GNI)","xaxis":{"domain":[0,1],"automargin":true,"title":"Ano"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Dano CO₂ (% do GNI)"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[2021,2020,2019,2018,2017,2016,2015,2014,2013,2012,2011,2010,2009,2008,2007,2006,2005,2004,2003,2002,2001,2000,1999,1998,1997,1996,1995,1994,1993,1992,1991,1990],"y":[0.62673737008943298,0.64847319952298299,0.66702022604694899,0.67487504260701903,0.72501519635760103,0.75455122982515599,0.75164390113781498,0.62470222962779898,0.65674389119004295,0.65389716513650198,0.57904840783008604,0.63707776853471298,0.58178266989813399,0.56055292015029501,0.58082122650382295,0.655832562272466,0.650382303142787,0.63979292509271601,0.71008629218911601,0.81670032945515503,0.85143571225041803,0.79561908331920195,0.67883836873479797,0.66537019071066295,0.65440284675327798,0.57633864655857803,0.51780582334818503,0.58182332865575304,0.59946706574355002,0.55942355174565095,0.63679986333758598,0.64639269593587301],"mode":"lines+markers","line":{"color":"#e41a1c","width":4},"marker":{"color":"#e41a1c","size":10,"line":{"color":"rgba(31,119,180,1)"}},"text":["<b>Ano:<\/b> 2021 <br><b>Dano CO₂ (% do GNI):<\/b> 0.63","<b>Ano:<\/b> 2020 <br><b>Dano CO₂ (% do GNI):<\/b> 0.65","<b>Ano:<\/b> 2019 <br><b>Dano CO₂ (% do GNI):<\/b> 0.67","<b>Ano:<\/b> 2018 <br><b>Dano CO₂ (% do GNI):<\/b> 0.67","<b>Ano:<\/b> 2017 <br><b>Dano CO₂ (% do GNI):<\/b> 0.73","<b>Ano:<\/b> 2016 <br><b>Dano CO₂ (% do GNI):<\/b> 0.75","<b>Ano:<\/b> 2015 <br><b>Dano CO₂ (% do GNI):<\/b> 0.75","<b>Ano:<\/b> 2014 <br><b>Dano CO₂ (% do GNI):<\/b> 0.62","<b>Ano:<\/b> 2013 <br><b>Dano CO₂ (% do GNI):<\/b> 0.66","<b>Ano:<\/b> 2012 <br><b>Dano CO₂ (% do GNI):<\/b> 0.65","<b>Ano:<\/b> 2011 <br><b>Dano CO₂ (% do GNI):<\/b> 0.58","<b>Ano:<\/b> 2010 <br><b>Dano CO₂ (% do GNI):<\/b> 0.64","<b>Ano:<\/b> 2009 <br><b>Dano CO₂ (% do GNI):<\/b> 0.58","<b>Ano:<\/b> 2008 <br><b>Dano CO₂ (% do GNI):<\/b> 0.56","<b>Ano:<\/b> 2007 <br><b>Dano CO₂ (% do GNI):<\/b> 0.58","<b>Ano:<\/b> 2006 <br><b>Dano CO₂ (% do GNI):<\/b> 0.66","<b>Ano:<\/b> 2005 <br><b>Dano CO₂ (% do GNI):<\/b> 0.65","<b>Ano:<\/b> 2004 <br><b>Dano CO₂ (% do GNI):<\/b> 0.64","<b>Ano:<\/b> 2003 <br><b>Dano CO₂ (% do GNI):<\/b> 0.71","<b>Ano:<\/b> 2002 <br><b>Dano CO₂ (% do GNI):<\/b> 0.82","<b>Ano:<\/b> 2001 <br><b>Dano CO₂ (% do GNI):<\/b> 0.85","<b>Ano:<\/b> 2000 <br><b>Dano CO₂ (% do GNI):<\/b> 0.8","<b>Ano:<\/b> 1999 <br><b>Dano CO₂ (% do GNI):<\/b> 0.68","<b>Ano:<\/b> 1998 <br><b>Dano CO₂ (% do GNI):<\/b> 0.67","<b>Ano:<\/b> 1997 <br><b>Dano CO₂ (% do GNI):<\/b> 0.65","<b>Ano:<\/b> 1996 <br><b>Dano CO₂ (% do GNI):<\/b> 0.58","<b>Ano:<\/b> 1995 <br><b>Dano CO₂ (% do GNI):<\/b> 0.52","<b>Ano:<\/b> 1994 <br><b>Dano CO₂ (% do GNI):<\/b> 0.58","<b>Ano:<\/b> 1993 <br><b>Dano CO₂ (% do GNI):<\/b> 0.6","<b>Ano:<\/b> 1992 <br><b>Dano CO₂ (% do GNI):<\/b> 0.56","<b>Ano:<\/b> 1991 <br><b>Dano CO₂ (% do GNI):<\/b> 0.64","<b>Ano:<\/b> 1990 <br><b>Dano CO₂ (% do GNI):<\/b> 0.65"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text"],"type":"scatter","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<hr>
+</section>
+<section id="considerações" class="level2">
+<h2 class="anchored" data-anchor-id="considerações">Considerações</h2>
+<p>O <em>CO₂ Damage (% do GNI)</em> é fundamental para embasar políticas ambientais e avaliar o progresso rumo a uma economia de baixo carbono. Visualizações modernas e interativas, como as apresentadas aqui, tornam a análise mais intuitiva, acessível e útil para tomada de decisão pública e privada.</p>
+<hr>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -28,12 +28,15 @@ library(RColorBrewer)
 
 # Visão Geral
 
-A quantificação dos danos econômicos causados pelas emissões de dióxido de carbono (*CO₂ Damage % do GNI*) permite avaliar políticas ambientais, comparar países e monitorar avanços em sustentabilidade. Este painel interativo oferece uma experiência moderna e visualmente atraente para explorar o tema.
+A variável *“CO₂ Damage (% do GNI)”* foi escolhida por sua relevância ambiental e econômica. Ela representa os prejuízos estimados causados pelas emissões de dióxido de carbono, expressos como percentual do Produto Nacional Bruto (GNI) de cada país — uma métrica que permite dimensionar o impacto ambiental em termos proporcionais à economia nacional.
 
--   **Evolução histórica** dos países mais afetados e da Alemanha.
--   **Comparação internacional** com gráfico de dispersão interativo (PIB per capita, população e dano econômico).
--   **Foco na Alemanha** com linha do tempo detalhada.
--   **Tabela dinâmica** para consulta e comparação.
+**Relevância atual:** Em um cenário de crescente urgência climática, compreender o peso das emissões de CO₂ sobre a economia nacional é essencial para o desenvolvimento de políticas públicas, compromissos internacionais e estratégias sustentáveis.
+
+**Geração de insights:** Essa variável possibilita comparações significativas entre países e ao longo do tempo, revelando padrões de impacto ambiental ajustados ao tamanho de cada economia. Isso favorece análises mais justas e fundamentadas.
+
+**Interdisciplinaridade:** Ao integrar aspectos econômicos, ambientais e sociais, o *CO₂ Damage (% do GNI)* é uma ferramenta valiosa para estudos em ESG (Environmental, Social and Governance), sustentabilidade e planejamento de longo prazo.
+
+Com base nessa métrica, foram elaborados gráficos que evidenciam variações e tendências, permitindo uma interpretação visual clara sobre a evolução e os efeitos das emissões de CO₂ nas economias ao redor do mundo.
 
 ------------------------------------------------------------------------
 
@@ -57,9 +60,21 @@ regioes <- WDI_data$country %>% select(iso2c, region)
 
 ------------------------------------------------------------------------
 
-## 1. Evolução dos Maiores Danos Econômicos por País
+## **GRÁFICO COM DADOS EM PAINEL**
 
-O gráfico abaixo destaca os 8 países mais impactados em 2023 e a Alemanha. Passe o mouse sobre as linhas para detalhes, selecione países na legenda e aproxime com zoom.
+Para representar visualmente a variável *CO₂ Damage (% do GNI)*, foi utilizado um gráfico construído a partir de dados em painel — ou seja, que combinam observações ao longo do tempo (séries temporais) e entre diferentes unidades (países).
+
+O uso de dados em painel é especialmente eficaz por permitir:
+
+-   **Visualização de tendências temporais** dentro de cada país ao longo dos anos;
+
+-   **Comparação entre países**, destacando padrões distintos, similaridades e heterogeneidades;
+
+-   **Identificação de outliers e comportamentos atípicos**, tanto no tempo quanto entre nações.
+
+No gráfico, é possível observar que os danos econômicos causados pelas emissões de CO₂, como percentual do GNI, apresentam comportamentos variados. Enquanto alguns países registram tendência de redução desses impactos ao longo do tempo, outros mantêm níveis estáveis ou até crescentes.
+
+Essa representação gráfica oferece uma base robusta para análises mais aprofundadas, como investigações causais, correlações com outras variáveis (como PIB, estrutura da matriz energética ou políticas ambientais), além de apoiar o planejamento e a formulação de estratégias sustentáveis.
 
 ```{r}
 #| label: grafico-evolucao
@@ -110,9 +125,17 @@ fig_evolucao
 
 ------------------------------------------------------------------------
 
-## 2. Dispersão Interativa: CO₂ Damage x PIB per capita x População (2023)
+## **GRÁFICO COM CORTE TRANSVERSAL**
 
-Compare países em 2023. O eixo X traz o PIB per capita (escala logarítmica), o Y mostra o dano econômico, o tamanho da bolha representa a população e as cores distinguem as regiões do mundo. Alemanha e países do G20 são destacados.
+O gráfico com corte transversal foi utilizado para comparar diferentes unidades — como países, empresas ou indivíduos — em um único ponto no tempo. Essa abordagem fornece uma *fotografia estática* da variável analisada, permitindo identificar diferenças e padrões entre os grupos observados, sem considerar variações ao longo dos anos.
+
+Esse tipo de representação é útil para:
+
+-   Comparar o impacto relativo entre países em um ano específico;
+
+-   Detectar disparidades ou similaridades estruturais entre as unidades observadas;
+
+-   Fornecer uma base para análises exploratórias ou diagnósticas em determinado período.
 
 ```{r}
 #| label: cortetransversal
@@ -155,7 +178,17 @@ ggplotly(grafico_base, tooltip = "text")
 
 ------------------------------------------------------------------------
 
-## 3. Alemanha: Linha do Tempo Interativa
+## **GRÁFICO COM SÉRIE TEMPORAL**
+
+O gráfico de série temporal foi utilizado para acompanhar a evolução da variável *CO₂ Damage (% do GNI)* ao longo dos anos. Esse tipo de visualização permite observar como os danos econômicos associados às emissões de CO₂ se comportaram em diferentes períodos, destacando tendências, flutuações e possíveis pontos de inflexão.
+
+Essa abordagem é especialmente útil para:
+
+-   Identificar **tendências de longo prazo** (crescimento, redução ou estabilidade);
+
+-   Detectar **variações sazonais ou cíclicas** no comportamento da variável;
+
+-   Avaliar o impacto de **eventos específicos ou mudanças de política** sobre os danos econômicos causados pelas emissões.
 
 Acompanhe a evolução do indicador na Alemanha. O gráfico permite zoom, seleção e detalhes por ponto.
 
